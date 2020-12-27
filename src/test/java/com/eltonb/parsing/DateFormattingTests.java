@@ -24,24 +24,24 @@ import java.util.stream.IntStream;
  *
  * @author elton.ballhysa
  */
-public class DateFormattingTests {
+class DateFormattingTests {
     
     private static final DateTimeFormatter threadSafeFormatter= DateTimeFormatter.ofPattern("dd.MM.yyyy");
     private static final SimpleDateFormat nonThreadSafeformatter = new SimpleDateFormat("dd.MM.yyyy");
     private static final int MAX_TRIES = 100;
 
     @Test
-    public void threadSafeTest() {
+    void threadSafeTest() {
         Callable<Boolean> testCall = this::threadSafeFormatter;
         long successCount = runParallelParses(testCall);
-        Assertions.assertEquals(successCount, MAX_TRIES);
+        Assertions.assertEquals(MAX_TRIES, successCount);
     }
 
     @Test
-    public void nonThreadSafeTest() {
+    void nonThreadSafeTest() {
         Callable<Boolean> testCall = this::nonThreadSafeFormatter;
         long successCount = runParallelParses(testCall);
-        Assertions.assertEquals(successCount, MAX_TRIES);
+        Assertions.assertEquals(MAX_TRIES, successCount);
     }
 
     private long runParallelParses(Callable<Boolean> parseTest) {
